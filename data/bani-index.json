@@ -1,0 +1,84 @@
+{
+ "banis": [
+  {
+   "id": "japji_sahib_poetic",
+   "name": "Japji Sahib",
+   "gurmukhiTitle": "ਜਪੁ ਜੀ ਸਾਹਿਬ",
+   "slot": "morning",
+   "pair": null,
+   "blurb": "Mool Mantar and 38 pauris — the poetic translation.",
+   "script": "english",
+   "verseCount": 24
+  },
+  {
+   "id": "ardaas",
+   "name": "Ardaas",
+   "gurmukhiTitle": "ਅਰਦਾਸ",
+   "slot": "morning",
+   "pair": null,
+   "blurb": "The Sikh prayer, including the Dohra.",
+   "script": "gurmukhi",
+   "verseCount": 35
+  },
+  {
+   "id": "chaupai",
+   "name": "Chaupai Sahib",
+   "gurmukhiTitle": "ਚੌਪਈ ਸਾਹਿਬ",
+   "slot": "evening",
+   "pair": "A",
+   "blurb": "Benti Chaupai — protection and courage.",
+   "script": "gurmukhi",
+   "verseCount": 173
+  },
+  {
+   "id": "rehras",
+   "name": "Rehras Sahib",
+   "gurmukhiTitle": "ਰਹਿਰਾਸ ਸਾਹਿਬ",
+   "slot": "evening",
+   "pair": "B",
+   "blurb": "The evening prayer.",
+   "script": "gurmukhi",
+   "verseCount": 530
+  },
+  {
+   "id": "anand",
+   "name": "Anand Sahib",
+   "gurmukhiTitle": "ਅਨੰਦ ਸਾਹਿਬ",
+   "slot": "night",
+   "pair": "A",
+   "blurb": "The Song of Bliss — 40 pauris.",
+   "script": "gurmukhi",
+   "verseCount": 211
+  },
+  {
+   "id": "sohila",
+   "name": "Kirtan Sohila",
+   "gurmukhiTitle": "ਕੀਰਤਨ ਸੋਹਿਲਾ",
+   "slot": "night",
+   "pair": "B",
+   "blurb": "The bedtime prayer.",
+   "script": "gurmukhi",
+   "verseCount": 97
+  },
+  {
+   "id": "jaap",
+   "name": "Jaap Sahib",
+   "gurmukhiTitle": "ਜਾਪ ਸਾਹਿਬ",
+   "slot": "extra",
+   "pair": null,
+   "blurb": "Guru Gobind Singh's hymn of the timeless.",
+   "script": "gurmukhi",
+   "verseCount": 808
+  },
+  {
+   "id": "tavprasad_savaiye",
+   "name": "Tavprasad Savaiye",
+   "gurmukhiTitle": "ਤ੍ਵਪ੍ਰਸਾਦਿ ਸਵੱਯੇ",
+   "slot": "extra",
+   "pair": null,
+   "blurb": "Ten savaiye of Guru Gobind Singh.",
+   "script": "gurmukhi",
+   "verseCount": 43
+  }
+ ]
+}

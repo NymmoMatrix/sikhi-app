@@ -1,0 +1,350 @@
+{
+ "count": 38,
+ "first": "2026-10-01",
+ "last": "2026-11-07",
+ "updated": "2026-11-07T22:37:57+00:00",
+ "days": [
+  {
+   "date": "2026-11-07",
+   "raag": "Raag Raamkalee",
+   "writer": "Guru Nanak Dev Ji",
+   "ang": 946,
+   "shabads": 3,
+   "verses": 36,
+   "first": "ਕਿਤੁ ਕਿਤੁ ਬਿਧਿ ਜਗੁ ਉਪਜੈ ਪੁਰਖਾ ਕਿਤੁ ਕਿਤੁ ਦੁਖਿ ਬਿਨਸਿ ਜਾਈ ॥"
+  },
+  {
+   "date": "2026-11-06",
+   "raag": "Raag Gond",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 864,
+   "shabads": 1,
+   "verses": 19,
+   "first": "ਗੋਂਡ ਮਹਲਾ ੫ ॥"
+  },
+  {
+   "date": "2026-11-05",
+   "raag": "Raag Bilaaval",
+   "writer": "Bhagat Kabeer Ji",
+   "ang": 857,
+   "shabads": 1,
+   "verses": 9,
+   "first": "ਬਿਲਾਵਲੁ ॥"
+  },
+  {
+   "date": "2026-11-04",
+   "raag": "Raag Bilaaval",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 845,
+   "shabads": 1,
+   "verses": 26,
+   "first": "ਬਿਲਾਵਲੁ ਮਹਲਾ ੫ ਛੰਤ"
+  },
+  {
+   "date": "2026-11-03",
+   "raag": "Raag Raamkalee",
+   "writer": "Guru Nanak Dev Ji",
+   "ang": 877,
+   "shabads": 1,
+   "verses": 11,
+   "first": "ਰਾਮਕਲੀ ਮਹਲਾ ੧ ॥"
+  },
+  {
+   "date": "2026-11-02",
+   "raag": "Raag Dhanaasree",
+   "writer": "Guru Raam Daas Ji",
+   "ang": 668,
+   "shabads": 1,
+   "verses": 11,
+   "first": "ਧਨਾਸਰੀ ਮਹਲਾ ੪ ॥"
+  },
+  {
+   "date": "2026-11-01",
+   "raag": "Raag Dhanaasree",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 684,
+   "shabads": 1,
+   "verses": 11,
+   "first": "ਧਨਾਸਰੀ ਮਹਲਾ ੫ ॥"
+  },
+  {
+   "date": "2026-10-31",
+   "raag": "Raag Dhanaasree",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 676,
+   "shabads": 1,
+   "verses": 9,
+   "first": "ਧਨਾਸਰੀ ਮਹਲਾ ੫ ॥"
+  },
+  {
+   "date": "2026-10-30",
+   "raag": "Raag Dhanaasree",
+   "writer": "Guru Raam Daas Ji",
+   "ang": 670,
+   "shabads": 1,
+   "verses": 11,
+   "first": "ਧਨਾਸਰੀ ਮਹਲਾ ੪ ॥"
+  },
+  {
+   "date": "2026-10-29",
+   "raag": "Raag Bilaaval",
+   "writer": "Guru Amar Daas Ji",
+   "ang": 796,
+   "shabads": 1,
+   "verses": 16,
+   "first": "ਬਿਲਾਵਲੁ ਮਹਲਾ ੩ ਘਰੁ ੧"
+  },
+  {
+   "date": "2026-10-28",
+   "raag": "Raag Sorath",
+   "writer": "Guru Tegh Bahaadur Ji",
+   "ang": 632,
+   "shabads": 1,
+   "verses": 9,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੯ ॥"
+  },
+  {
+   "date": "2026-10-27",
+   "raag": "Raag Sorath",
+   "writer": "Bhagat Kabeer Ji",
+   "ang": 654,
+   "shabads": 1,
+   "verses": 10,
+   "first": "ਬੇਦ ਪੁਰਾਨ ਸਭੈ ਮਤ ਸੁਨਿ ਕੈ ਕਰੀ ਕਰਮ ਕੀ ਆਸਾ ॥"
+  },
+  {
+   "date": "2026-10-26",
+   "raag": "Raag Dhanaasree",
+   "writer": "Bhagat Ravi Daas Ji",
+   "ang": 694,
+   "shabads": 1,
+   "verses": 8,
+   "first": "ਧਨਾਸਰੀ ਭਗਤ ਰਵਿਦਾਸ ਜੀ ਕੀ"
+  },
+  {
+   "date": "2026-10-25",
+   "raag": "Raag Dhanaasree",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 678,
+   "shabads": 1,
+   "verses": 10,
+   "first": "ਧਨਾਸਰੀ ਮਹਲਾ ੫ ਘਰੁ ੬"
+  },
+  {
+   "date": "2026-10-24",
+   "raag": "Raag Todee",
+   "writer": "Bhagat Naam Dev Ji",
+   "ang": 718,
+   "shabads": 1,
+   "verses": 14,
+   "first": "ਟੋਡੀ ਬਾਣੀ ਭਗਤਾਂ ਕੀ"
+  },
+  {
+   "date": "2026-10-23",
+   "raag": "Raag Dhanaasree",
+   "writer": "Guru Raam Daas Ji",
+   "ang": 690,
+   "shabads": 1,
+   "verses": 32,
+   "first": "ਧਨਾਸਰੀ ਛੰਤ ਮਹਲਾ ੪ ਘਰੁ ੧"
+  },
+  {
+   "date": "2026-10-22",
+   "raag": "Raag Tilang",
+   "writer": "Guru Nanak Dev Ji",
+   "ang": 722,
+   "shabads": 1,
+   "verses": 21,
+   "first": "ਤਿਲੰਗ ਮਃ ੧ ॥"
+  },
+  {
+   "date": "2026-10-21",
+   "raag": "Raag Dhanaasree",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 686,
+   "shabads": 1,
+   "verses": 22,
+   "first": "ਧਨਾਸਰੀ ਮਃ ੫ ਘਰੁ ੬ ਅਸਟਪਦੀ"
+  },
+  {
+   "date": "2026-10-20",
+   "raag": "Raag Sorath",
+   "writer": "Guru Tegh Bahaadur Ji",
+   "ang": 633,
+   "shabads": 1,
+   "verses": 9,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੯ ॥"
+  },
+  {
+   "date": "2026-10-19",
+   "raag": "Raag Sorath",
+   "writer": "Bhagat Kabeer Ji",
+   "ang": 656,
+   "shabads": 1,
+   "verses": 10,
+   "first": "ਸੰਤਹੁ ਮਨ ਪਵਨੈ ਸੁਖੁ ਬਨਿਆ ॥"
+  },
+  {
+   "date": "2026-10-18",
+   "raag": "Raag Sorath",
+   "writer": "Guru Tegh Bahaadur Ji",
+   "ang": 632,
+   "shabads": 1,
+   "verses": 9,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੯ ॥"
+  },
+  {
+   "date": "2026-10-17",
+   "raag": "Raag Tilang",
+   "writer": "Guru Raam Daas Ji",
+   "ang": 725,
+   "shabads": 1,
+   "verses": 45,
+   "first": "ਤਿਲੰਗ ਮਹਲਾ ੪ ॥"
+  },
+  {
+   "date": "2026-10-16",
+   "raag": "Raag Sorath",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 641,
+   "shabads": 1,
+   "verses": 22,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੫ ਘਰੁ ੨ ਅਸਟਪਦੀਆ"
+  },
+  {
+   "date": "2026-10-15",
+   "raag": "Raag Dhanaasree",
+   "writer": "Guru Raam Daas Ji",
+   "ang": 690,
+   "shabads": 1,
+   "verses": 32,
+   "first": "ਧਨਾਸਰੀ ਛੰਤ ਮਹਲਾ ੪ ਘਰੁ ੧"
+  },
+  {
+   "date": "2026-10-14",
+   "raag": "Raag Sorath",
+   "writer": "Guru Nanak Dev Ji",
+   "ang": 598,
+   "shabads": 1,
+   "verses": 11,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੧ ॥"
+  },
+  {
+   "date": "2026-10-13",
+   "raag": "Raag Soohee",
+   "writer": "Guru Raam Daas Ji",
+   "ang": 731,
+   "shabads": 1,
+   "verses": 11,
+   "first": "ਸੂਹੀ ਮਹਲਾ ੪ ॥"
+  },
+  {
+   "date": "2026-10-12",
+   "raag": "Raag Bilaaval",
+   "writer": "Guru Raam Daas Ji",
+   "ang": 800,
+   "shabads": 1,
+   "verses": 18,
+   "first": "ੴ ਸਤਿਗੁਰ ਪ੍ਰਸਾਦਿ ॥"
+  },
+  {
+   "date": "2026-10-11",
+   "raag": "Raag Vadhans",
+   "writer": "Guru Amar Daas Ji",
+   "ang": 560,
+   "shabads": 1,
+   "verses": 11,
+   "first": "ਵਡਹੰਸੁ ਮਹਲਾ ੩ ॥"
+  },
+  {
+   "date": "2026-10-10",
+   "raag": "Raag Dhanaasree",
+   "writer": "Guru Nanak Dev Ji",
+   "ang": 685,
+   "shabads": 1,
+   "verses": 36,
+   "first": "ਧਨਾਸਰੀ ਮਹਲਾ ੧ ਘਰੁ ੨ ਅਸਟਪਦੀਆ"
+  },
+  {
+   "date": "2026-10-09",
+   "raag": "Raag Sorath",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 611,
+   "shabads": 1,
+   "verses": 11,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੫ ॥"
+  },
+  {
+   "date": "2026-10-08",
+   "raag": "Raag Soohee",
+   "writer": "Guru Raam Daas Ji",
+   "ang": 773,
+   "shabads": 1,
+   "verses": 26,
+   "first": "ਰਾਗੁ ਸੂਹੀ ਮਹਲਾ ੪ ਛੰਤ ਘਰੁ ੧"
+  },
+  {
+   "date": "2026-10-07",
+   "raag": "Raag Raamkalee",
+   "writer": "Guru Amar Daas Ji",
+   "ang": 956,
+   "shabads": 3,
+   "verses": 12,
+   "first": "ਸਲੋਕ ਮਃ ੩ ॥"
+  },
+  {
+   "date": "2026-10-06",
+   "raag": "Raag Sorath",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 608,
+   "shabads": 1,
+   "verses": 16,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੫ ਘਰੁ ੧ ਤਿਤੁਕੇ"
+  },
+  {
+   "date": "2026-10-05",
+   "raag": "Raag Vadhans",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 577,
+   "shabads": 8,
+   "verses": 40,
+   "first": "ਸਲੋਕੁ ॥"
+  },
+  {
+   "date": "2026-10-04",
+   "raag": "Raag Sorath",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 628,
+   "shabads": 1,
+   "verses": 13,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੫ ॥"
+  },
+  {
+   "date": "2026-10-03",
+   "raag": "Raag Sorath",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 624,
+   "shabads": 1,
+   "verses": 15,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੫ ॥"
+  },
+  {
+   "date": "2026-10-02",
+   "raag": "Raag Tilang",
+   "writer": "Guru Raam Daas Ji",
+   "ang": 725,
+   "shabads": 1,
+   "verses": 45,
+   "first": "ਤਿਲੰਗ ਮਹਲਾ ੪ ॥"
+  },
+  {
+   "date": "2026-10-01",
+   "raag": "Raag Sorath",
+   "writer": "Guru Amar Daas Ji",
+   "ang": 637,
+   "shabads": 1,
+   "verses": 28,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੩ ਘਰੁ ੧ ਤਿਤੁਕੀ"
+  }
+ ]
+}

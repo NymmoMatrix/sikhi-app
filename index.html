@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sikhi</title>
+<meta name="description" content="Nitnem, the daily Hukamnama from Sri Harmandir Sahib, Simran and daily reflections.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#e07b1f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Sikhi">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div>
+      <h1 id="topTitle">Sikhi</h1>
+      <p id="topSub" class="topSub"></p>
+    </div>
+    <button id="textSizeBtn" class="icon-btn" title="Text size" aria-label="Text size">Aa</button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ───────────── TODAY ───────────── -->
+  <section class="view" id="view-today">
+    <div class="now-card" id="nowCard">
+      <p class="now-kicker" id="nowKicker">Now</p>
+      <h2 id="nowTitle">…</h2>
+      <p class="now-sub" id="nowSub"></p>
+      <button class="btn-primary" id="nowRead">Read</button>
+    </div>
+
+    <div class="card tap" id="hukamCard">
+      <p class="card-kicker">Today's Hukamnama</p>
+      <p class="card-meta" id="hukamMeta">From Sri Harmandir Sahib</p>
+      <p class="gurmukhi-line" id="hukamLine">…</p>
+      <p class="card-more">Tap to read →</p>
+    </div>
+
+    <div class="card tap" id="reflectCard">
+      <p class="card-kicker">Today's reflection</p>
+      <p class="quote" id="reflectQuote">…</p>
+      <p class="card-more">Tap for more →</p>
+    </div>
+
+    <div class="streak-card">
+      <div><span class="streak-num" id="streakNum">0</span><span class="streak-lab">day streak</span></div>
+      <div><span class="streak-num" id="readTodayNum">0</span><span class="streak-lab">read today</span></div>
+      <button class="btn-ghost" id="markRead">Mark today read</button>
+    </div>
+  </section>
+
+  <!-- ───────────── HUKAMNAMA ───────────── -->
+  <section class="view" id="view-hukamnama" hidden>
+    <div id="hukamBody">
+      <div class="loading">Loading today's Hukamnama…</div>
+    </div>
+
+    <div class="hukam-archive" id="hukamArchive">
+      <p class="card-kicker">Past Hukamnamas</p>
+      <p class="archive-sub" id="archiveSub">…</p>
+      <label class="date-jump-label" for="hukamDateJump">Jump to a date</label>
+      <input type="date" id="hukamDateJump" class="date-jump">
+      <div id="hukamList"></div>
+    </div>
+  </section>
+
+  <!-- ───────────── NITNEM ───────────── -->
+  <section class="view" id="view-nitnem" hidden>
+    <div id="baniList"></div>
+  </section>
+
+  <!-- ───────────── SIMRAN ───────────── -->
+  <section class="view" id="view-simran" hidden>
+    <div class="simran-wrap">
+      <div class="seg" id="mantraSeg"></div>
+      <button class="simran-tap" id="simranTap" aria-label="Count">
+        <span class="simran-glyph" id="simranGlyph">ੴ</span>
+        <span class="simran-count" id="simranCount">0</span>
+        <span class="simran-hint">tap anywhere in the circle</span>
+      </button>
+      <div class="mala" id="malaDots" aria-hidden="true"></div>
+      <div class="simran-stats">
+        <div><span class="stat-num" id="simranTotal">0</span><span class="stat-lab">lifetime</span></div>
+        <div><span class="stat-num" id="simranMalas">0</span><span class="stat-lab">malas (108)</span></div>
+      </div>
+      <div class="simran-actions">
+        <button class="btn-ghost" id="simranReset">Reset count</button>
+        <button class="btn-ghost" id="simranUndo">Undo</button>
+      </div>
+      <p class="fineprint">Counts are kept on this device only.</p>
+    </div>
+  </section>
+
+  <!-- ───────────── REFLECTIONS ───────────── -->
+  <section class="view" id="view-reflect" hidden>
+    <div class="card reflect-big">
+      <p class="card-kicker" id="reflectKicker">Today's reflection</p>
+      <p class="quote-big" id="reflectBig">…</p>
+      <p class="card-meta" id="reflectSource"></p>
+      <div class="reflect-actions">
+        <button class="btn-ghost" id="reflectNext">Another</button>
+        <button class="btn-ghost" id="reflectToday">Today's</button>
+      </div>
+    </div>
+    <img id="reflectImg" class="reflect-img" alt="" loading="lazy">
+    <div class="sech">Inspiration · <span id="galCount">0</span></div>
+    <div class="gal" id="gallery"></div>
+  </section>
+
+</main>
+
+<!-- bottom navigation -->
+<nav class="tabbar" id="tabbar">
+  <button class="tab" data-view="today" aria-label="Today">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v3M12 18.4v3M2.6 12h3M18.4 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/></svg>
+    <span>Today</span>
+  </button>
+  <button class="tab" data-view="hukamnama" aria-label="Hukamnama">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5.5h6a2.5 2.5 0 0 1 2.5 2.5v11a2 2 0 0 0-2-2H3.5z"/><path d="M20.5 5.5h-6A2.5 2.5 0 0 0 12 8v11a2 2 0 0 1 2-2h6.5z"/></svg>
+    <span>Hukamnama</span>
+  </button>
+  <button class="tab" data-view="nitnem" aria-label="Nitnem">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6.5 7.5l11 9M17.5 7.5l-11 9"/><circle cx="12" cy="12" r="2.4"/></svg>
+    <span>Nitnem</span>
+  </button>
+  <button class="tab" data-view="simran" aria-label="Simran">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.6" r="1.7"/><circle cx="18.4" cy="7.4" r="1.7"/><circle cx="20.4" cy="14" r="1.7"/><circle cx="16.4" cy="19.4" r="1.7"/><circle cx="9.4" cy="20.2" r="1.7"/><circle cx="4.4" cy="16.2" r="1.7"/><circle cx="4.2" cy="9.4" r="1.7"/><circle cx="8.6" cy="5.4" r="1.7"/></svg>
+    <span>Simran</span>
+  </button>
+  <button class="tab" data-view="reflect" aria-label="Reflections">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9z"/><path d="M18.6 16.4l.8 2.1 2.1.8-2.1.8-.8 2.1-.8-2.1-2.1-.8 2.1-.8z"/></svg>
+    <span>Reflections</span>
+  </button>
+</nav>
+
+<!-- full-screen bani reader -->
+<div class="reader" id="reader" hidden>
+  <div class="reader-bar">
+    <button class="icon-btn" id="readerBack" aria-label="Back">‹</button>
+    <div class="reader-title">
+      <strong id="readerName"></strong>
+      <span id="readerSub"></span>
+    </div>
+    <button class="icon-btn" id="readerOpts" aria-label="Display options">Aa</button>
+  </div>
+  <div class="reader-opts" id="readerOptsPanel" hidden>
+    <button class="chip" data-opt="translit" id="toggleTranslit">Transliteration</button>
+    <button class="chip" data-opt="english" id="toggleEnglish">English</button>
+    <button class="chip" data-opt="gurmukhi" id="toggleGurmukhi">Gurmukhi</button>
+    <span class="chip-sep"></span>
+    <button class="chip" id="fontDown">A−</button>
+    <button class="chip" id="fontUp">A+</button>
+    <span class="chip-sep"></span>
+    <button class="chip" id="audioFollow" hidden>Follow</button>
+    <button class="chip" id="audioSwap" hidden>♪ Audio</button>
+    <button class="chip" id="audioClear" hidden>✕</button>
+  </div>
+  <div class="reader-body" id="readerBody"></div>
+
+  <!-- listen-along player: shown only for banis that have a recitation -->
+  <div class="audio-bar" id="audioBar" hidden>
+    <button class="ab-play" id="audioPlay" aria-label="Play">▶</button>
+    <div class="ab-mid">
+      <input type="range" id="audioSeek" min="0" max="1000" value="0" step="1" aria-label="Seek">
+      <div class="ab-times"><span id="audioNow">0:00</span><span id="audioDur">0:00</span></div>
+    </div>
+    <button class="ab-rate" id="audioRate" aria-label="Playback speed">1×</button>
+  </div>
+
+  <!-- a bani with no audio yet: import your own copy, kept on this device only -->
+  <div class="add-audio" id="addAudioBar" hidden>
+    <button class="aa-btn" id="addAudioBtn">♪ Add audio for this bani</button>
+    <span class="aa-note" id="addAudioNote">stays on this device</span>
+  </div>
+  <input type="file" id="audioFile" accept="audio/*" hidden>
+  <input type="file" id="photoFile" accept="image/*" multiple hidden>
+</div>
+
+<!-- lightbox -->
+<div class="lightbox" id="lightbox" hidden><img id="lightboxImg" alt=""></div>
+
+<script src="app.js"></script>
+</body>
+</html>
