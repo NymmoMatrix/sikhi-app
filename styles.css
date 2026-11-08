@@ -208,8 +208,7 @@ main{max-width:720px;margin:0 auto;padding:1rem 1.1rem 2.5rem}
   display:flex;flex-direction:column;gap:.45rem;
   padding:.5rem .9rem calc(.5rem + env(safe-area-inset-bottom));
   border-top:1px solid var(--line);
-  background:color-mix(in srgb,var(--bg-soft) 92%,transparent);
-  backdrop-filter:saturate(160%) blur(12px);
+  background:var(--bg-soft);   /* opaque: same iOS fixed-position bug as the tab bar */
 }
 .ab-row{display:flex;align-items:center;gap:.7rem}
 .ab-rates{display:flex;align-items:center;gap:.32rem;flex-wrap:wrap}
@@ -418,8 +417,10 @@ main{max-width:720px;margin:0 auto;padding:1rem 1.1rem 2.5rem}
 .tabbar{
   position:fixed;left:0;right:0;bottom:0;z-index:40;
   display:flex;justify-content:space-around;align-items:stretch;
-  background:color-mix(in srgb,var(--bg) 92%,transparent);
-  backdrop-filter:saturate(160%) blur(14px);
+  /* Opaque, and deliberately NO backdrop-filter: a backdrop-filter on a
+     position:fixed element makes iOS scroll it with the page instead of
+     pinning it. Same look, none of the bug. */
+  background:var(--bg);
   border-top:1px solid var(--line);
   padding-bottom:env(safe-area-inset-bottom);
 }
