@@ -52,6 +52,15 @@ async function boot() {
   S.images = [];                  // photos are yours alone: they live in device storage
   await refreshLocalKeys();       // which banis already have your own audio on this device
   await refreshPhotos();          // and which photos you have imported here
+  // iOS can unload an installed PWA while the file picker is open. If we are
+  // back with the flag still set, the pick came to nothing — say it out loud.
+  if (sessionStorage.getItem('pickerPending')) {
+    sessionStorage.removeItem('pickerPending');
+    setTimeout(() => toast('The picker closed the app — tap "Import the zip" again', 8000), 1500);
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') sessionStorage.removeItem('pickerPending');
+  });
 
   applyDisplay(); applyScale();
   renderNitnem(); renderToday(); renderReflect(); renderSimran(); renderGallery();
@@ -660,15 +669,21 @@ function renderGallery() {
   $('#galCount').textContent = S.images.length;
   if (!S.images.length) {
     gal.innerHTML = '<div class="gal-empty"><p>Your photos stay on this device.</p>'
-      + '<button class="aa-btn" id="galImport">Import photos</button>'
-      + '<span class="aa-note">pick the .zip or the photos · never uploaded</span></div>';
+      + '<button class="aa-btn" id="galImport">Import the zip</button>'
+      + '<span class="aa-note">Sikhi-App-Photos.zip · never uploaded</span>'
+      + '<button class="link-btn" id="galImportMany">or choose the photos instead</button></div>';
   } else {
     gal.innerHTML = S.images.map(f =>
       `<button data-img="${esc(f)}"><img loading="lazy" src="${PHOTO.urls[f] || ''}" alt=""></button>`).join('')
       + '<button class="gal-add" id="galImport" aria-label="Import photos">＋</button>';
   }
   const imp = $('#galImport');
-  if (imp) imp.onclick = () => $('#photoFile').click();
+  // armed on tap, disarmed as soon as we are visible again; if the app is
+  // unloaded while the picker is up, the flag survives and boot() says so
+  const arm = sel => { sessionStorage.setItem('pickerPending', '1'); $(sel).click(); };
+  if (imp) imp.onclick = () => arm('#photoFile');
+  const impMany = $('#galImportMany');
+  if (impMany) impMany.onclick = () => arm('#photoFileMany');
   $$('#gallery button[data-img]').forEach(b => b.addEventListener('click', () => {
     $('#lightboxImg').src = PHOTO.urls[b.dataset.img] || '';
     $('#lightbox').hidden = false;
@@ -826,31 +841,51 @@ async function imagesFromZip(file) {
   return out;
 }
 
+/* A tiny message strip: import failures must never be silent (iOS pickers can
+   hand back nothing at all, and an alert can be missed). */
+function toast(msg, ms) {
+  let t = document.getElementById('toast');
+  if (!t) { t = document.createElement('div'); t.id = 'toast'; document.body.appendChild(t); }
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => t.classList.remove('on'), ms || 3200);
+}
+
 /* import your own photos — same rules: they stay on this device */
-$('#photoFile').onchange = async e => {
-  let files = [...(e.target.files || [])];
-  e.target.value = '';
-  if (!files.length) return;
-  const say = t => { const n = document.querySelector('#gallery .aa-note'); if (n) n.textContent = t; };
+async function takePhotoFiles(list) {
+  let files = [...list];
+  if (!files.length) { toast('Nothing was chosen — try again'); return; }
+  const zip = files.find(f => /\.zip$/i.test(f.name) || f.type === 'application/zip');
   try {
-    const zip = files.find(f => /\.zip$/i.test(f.name) || f.type === 'application/zip');
     if (zip) {
-      say('unpacking…');
+      toast('Opening ' + zip.name + ' (' + (zip.size / 1e6).toFixed(1) + ' MB)…', 6000);
+      if (typeof DecompressionStream === 'undefined') {
+        toast('This iOS cannot unzip in the app — unzip the file in Files, then choose the photos', 8000);
+        return;
+      }
       files = await imagesFromZip(zip);
     } else {
       files = files.filter(f => /^image\//.test(f.type));
     }
-    if (!files.length) { say('no photos found in that file'); return; }
-    if (files.length > 1) say('saving ' + files.length + ' photos…');
+    if (!files.length) {
+      toast('No photos found in that file — pick Sikhi-App-Photos.zip', 6000);
+      return;
+    }
+    if (files.length > 1) toast('Saving ' + files.length + ' photos…', 8000);
     await savePhotos(files);
     if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+    sessionStorage.removeItem('pickerPending');
     await refreshPhotos();
     renderGallery();
     renderReflect();          // the reflection card shows one of your photos
+    toast('Imported ' + files.length + (files.length === 1 ? ' photo' : ' photos'));
   } catch (err) {
-    alert('Could not save those photos on this device.');
+    toast('Could not read that file: ' + (err && err.message ? err.message : 'unknown error'), 8000);
   }
-};
+}
+$('#photoFile').onchange = e => { const f = [...(e.target.files || [])]; e.target.value = ''; takePhotoFiles(f); };
+$('#photoFileMany').onchange = e => { const f = [...(e.target.files || [])]; e.target.value = ''; takePhotoFiles(f); };
 window.addEventListener('pagehide', () => savePos());
 
 document.addEventListener('keydown', e => {

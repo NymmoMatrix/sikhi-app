@@ -183,7 +183,10 @@
     <span class="aa-note" id="addAudioNote">stays on this device</span>
   </div>
   <input type="file" id="audioFile" accept="audio/*" hidden>
-  <input type="file" id="photoFile" accept="image/*,.zip,application/zip" multiple hidden>
+  <!-- no accept / no multiple on the zip input: on iOS that means one tap selects the
+       file immediately, instead of checking it and hunting for an "Open" button -->
+  <input type="file" id="photoFile" hidden>
+  <input type="file" id="photoFileMany" accept="image/*" multiple hidden>
 </div>
 
 <!-- lightbox -->

@@ -262,6 +262,18 @@ main{max-width:720px;margin:0 auto;padding:1rem 1.1rem 2.5rem}
   grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:.4rem;
   padding:2rem 1rem;text-align:center;color:var(--muted);font-size:.85rem;
 }
+#toast{
+  position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));
+  transform:translate(-50%,12px);max-width:88vw;text-align:center;
+  padding:.6rem .9rem;border-radius:14px;font-size:.8rem;line-height:1.35;
+  background:rgba(28,24,20,.94);color:#f4efe6;box-shadow:0 8px 24px rgba(0,0,0,.28);
+  opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:60;
+}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.link-btn{
+  border:none;background:none;color:var(--muted);font-size:.72rem;
+  text-decoration:underline;text-underline-offset:3px;padding:.35rem .2rem;
+}
 .gal-add{
   display:flex;align-items:center;justify-content:center;
   border:1px dashed var(--line);background:var(--card);color:var(--accent-deep);
