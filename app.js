@@ -661,7 +661,7 @@ function renderGallery() {
   if (!S.images.length) {
     gal.innerHTML = '<div class="gal-empty"><p>Your photos stay on this device.</p>'
       + '<button class="aa-btn" id="galImport">Import photos</button>'
-      + '<span class="aa-note">picked once · never uploaded</span></div>';
+      + '<span class="aa-note">pick the .zip or the photos · never uploaded</span></div>';
   } else {
     gal.innerHTML = S.images.map(f =>
       `<button data-img="${esc(f)}"><img loading="lazy" src="${PHOTO.urls[f] || ''}" alt=""></button>`).join('')
@@ -782,12 +782,66 @@ $('#audioClear').onclick = async () => {
   } catch {}
   if (AU.bani === b) setupAudio(b);
 };
+/* iOS hands over files, not folders, so a bundle arrives as a .zip. Unpack it
+   here instead of making you unzip in Files first: read the central directory,
+   inflate each entry with DecompressionStream (Safari 16.4+), keep the images. */
+async function imagesFromZip(file) {
+  const buf = new Uint8Array(await file.arrayBuffer());
+  const dv = new DataView(buf.buffer);
+  let eocd = -1;
+  for (let i = buf.length - 22; i >= 0 && i > buf.length - 65558; i--)
+    if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+  if (eocd < 0) throw new Error('not a zip');
+  const count = dv.getUint16(eocd + 10, true);
+  let off = dv.getUint32(eocd + 16, true);
+  const out = [];
+  for (let n = 0; n < count; n++) {
+    if (dv.getUint32(off, true) !== 0x02014b50) break;
+    const method = dv.getUint16(off + 10, true);
+    const csize = dv.getUint32(off + 20, true);
+    const namelen = dv.getUint16(off + 28, true);
+    const extralen = dv.getUint16(off + 30, true);
+    const commentlen = dv.getUint16(off + 32, true);
+    const lho = dv.getUint32(off + 42, true);
+    const name = new TextDecoder().decode(buf.subarray(off + 46, off + 46 + namelen));
+    off += 46 + namelen + extralen + commentlen;
+    if (name.endsWith('/') || !/\.(jpe?g|png|webp|gif)$/i.test(name)) continue;
+    if (dv.getUint32(lho, true) !== 0x04034b50) continue;
+    const lnamelen = dv.getUint16(lho + 26, true);
+    const lextralen = dv.getUint16(lho + 28, true);
+    const start = lho + 30 + lnamelen + lextralen;
+    const raw = buf.subarray(start, start + csize);
+    let bytes;
+    if (method === 0) bytes = raw;
+    else if (method === 8) {
+      const stream = new Blob([raw]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+      bytes = new Uint8Array(await new Response(stream).arrayBuffer());
+    } else continue;
+    const base = name.split('/').pop();
+    const type = /\.png$/i.test(base) ? 'image/png'
+               : /\.webp$/i.test(base) ? 'image/webp'
+               : /\.gif$/i.test(base) ? 'image/gif' : 'image/jpeg';
+    out.push(new File([bytes], base, { type }));
+  }
+  return out;
+}
+
 /* import your own photos — same rules: they stay on this device */
 $('#photoFile').onchange = async e => {
-  const files = [...(e.target.files || [])].filter(f => /^image\//.test(f.type));
+  let files = [...(e.target.files || [])];
   e.target.value = '';
   if (!files.length) return;
+  const say = t => { const n = document.querySelector('#gallery .aa-note'); if (n) n.textContent = t; };
   try {
+    const zip = files.find(f => /\.zip$/i.test(f.name) || f.type === 'application/zip');
+    if (zip) {
+      say('unpacking…');
+      files = await imagesFromZip(zip);
+    } else {
+      files = files.filter(f => /^image\//.test(f.type));
+    }
+    if (!files.length) { say('no photos found in that file'); return; }
+    if (files.length > 1) say('saving ' + files.length + ' photos…');
     await savePhotos(files);
     if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
     await refreshPhotos();
