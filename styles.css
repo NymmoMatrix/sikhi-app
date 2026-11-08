@@ -296,6 +296,28 @@ main{max-width:720px;margin:0 auto;padding:1rem 1.1rem 2.5rem}
 .dr-main em{font-size:.68rem;color:var(--accent-deep);font-style:normal}
 .date-credit{margin:1.2rem 0 0;font-size:.66rem;color:var(--muted);line-height:1.45}
 
+/* ───────────── saakhi ───────────── */
+.saakhi-intro{margin:.2rem 0 .9rem;font-size:.8rem;color:var(--muted)}
+.saakhi-item{
+  display:flex;flex-direction:column;gap:.25rem;width:100%;text-align:left;
+  padding:.95rem .1rem;border:none;border-bottom:1px solid var(--line);background:none;color:inherit;
+}
+.saakhi-item:active{background:var(--accent-tint);border-radius:10px}
+.saakhi-item strong{font-size:.95rem;line-height:1.3}
+.saakhi-item span{font-size:.82rem;color:var(--muted);line-height:1.4}
+.saakhi-item em{font-size:.66rem;color:var(--accent-deep);font-style:normal}
+.saakhi-empty{font-size:.85rem;color:var(--muted);padding:1.2rem 0}
+.saakhi-actions{display:flex;gap:.55rem;margin-top:1.1rem;flex-wrap:wrap}
+.saakhi-edit{display:flex;flex-direction:column;gap:.7rem;padding-top:.4rem}
+.saakhi-input,.saakhi-textarea{
+  width:100%;border:1px solid var(--line);border-radius:12px;padding:.75rem .85rem;
+  background:var(--card);color:inherit;font:inherit;font-size:.92rem;
+}
+.saakhi-input{font-weight:600}
+.saakhi-textarea{min-height:52vh;resize:vertical;line-height:1.6}
+#saakhiBody p{margin:0 0 1.05rem;line-height:1.68;font-size:calc(1rem * var(--read))}
+#saakhiBody p:last-child{margin-bottom:0}
+
 /* ───────────── simran ───────────── */
 .simran-wrap{display:flex;flex-direction:column;align-items:center;gap:1rem;padding-top:.4rem}
 .seg{display:flex;gap:.35rem;flex-wrap:wrap;justify-content:center}

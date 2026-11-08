@@ -68,7 +68,7 @@ async function boot() {
   });
 
   applyDisplay(); applyScale();
-  renderNitnem(); renderToday(); renderReflect(); renderSimran(); renderGallery();
+  renderNitnem(); renderToday(); renderReflect(); renderSaakhi(); renderGallery();
   loadHukamnama();
   loadHukamIndex();
   $('#hukamDateJump').onchange = e => { if (e.target.value) openHukamDate(e.target.value); };
@@ -417,11 +417,12 @@ let LOCAL_KEYS = new Set();
 
 function idbOpen() {
   return new Promise((res, rej) => {
-    const r = indexedDB.open(AUDIO_DB, 2);
+    const r = indexedDB.open(AUDIO_DB, 3);
     r.onupgradeneeded = () => {
       const db = r.result;
       if (!db.objectStoreNames.contains('files')) db.createObjectStore('files');
       if (!db.objectStoreNames.contains('photos')) db.createObjectStore('photos');
+      if (!db.objectStoreNames.contains('sakhis')) db.createObjectStore('sakhis');
     };
     r.onsuccess = () => res(r.result);
     r.onerror = () => rej(r.error);
@@ -623,39 +624,93 @@ async function setupAudio(b) {
   }
 }
 
-/* ───────────── Simran ───────────── */
-const MANTRAS = [
-  { id: 'ikonkar', glyph: 'ੴ', label: 'Ik Onkar' },
-  { id: 'waheguru', glyph: 'ਵਾਹਿਗੁਰੂ', label: 'Waheguru' },
-  { id: 'satnam', glyph: 'ਸਤਿ ਨਾਮੁ', label: 'Sat Naam' },
-  { id: 'mool', glyph: 'ਮੂਲ ਮੰਤਰ', label: 'Mool Mantar' },
+/* ───────────── Saakhi ─────────────
+   Sakhis live in this device's storage — written, imported, edited and deleted
+   here, never uploaded. Three traditional sakhis are seeded on first run so the
+   section is not empty; they can be edited or removed like any other. */
+const SAAKHI = { list: [] };
+const SAAKHI_SEED = [
+  { id: 'seed-lalo', title: 'Malik Bhago and Bhai Lalo', source: 'Traditional sakhi',
+    body: 'Guru Nanak was invited to a feast by Malik Bhago, a wealthy official who had grown rich on the labour of the village. The Guru declined, and went instead to the house of Bhai Lalo, a carpenter who earned his bread honestly.\n\nWhen Malik Bhago pressed him, the Guru took a piece of the rich man\'s bread in one hand and a piece of Bhai Lalo\'s coarse bread in the other, and squeezed. From the rich man\'s bread came blood; from the carpenter\'s came milk.\n\nThe lesson was plain: what is earned by exploiting others cannot nourish. Truthful earning is not a detail of the teaching \u2014 it is its foundation.' },
+  { id: 'seed-kanhaiya', title: "Bhai Kanhaiya's water", source: 'Traditional sakhi',
+    body: 'During the siege at Anandpur, Bhai Kanhaiya carried water to the wounded on the battlefield. Some Sikhs complained to Guru Gobind Singh: he was giving water to the enemy as well as to their own.\n\nThe Guru called him and asked what he was doing. Bhai Kanhaiya answered that he had been taught to see the Guru\'s light in every face, and so could not tell friend from foe.\n\nGuru Gobind Singh did not rebuke him. He gave him ointment as well as water, so he could also dress the wounded \u2014 and from that service grew the tradition of the sewadar who tends to all, without asking who they are.' },
+  { id: 'seed-janeu', title: 'The thread that does not break', source: 'Traditional sakhi',
+    body: 'At the ceremony where boys of his caste were given the janeu \u2014 the sacred thread \u2014 the young Nanak refused to accept it.\n\nHe asked what would happen to the thread when it wore out, when it broke, when the body aged. A thread of cotton could not hold anyone to truth, he said. If there were a thread worth wearing, it would be one of compassion, contentment and restraint \u2014 a thread that could not be broken, lost or burned.\n\nThe priests had no answer. What he described was not a ritual to be put on, but a way of living to be carried.' },
 ];
 
-function renderSimran() {
-  const s = S.simran;
-  $('#mantraSeg').innerHTML = MANTRAS.map(m =>
-    `<button class="chip${s.mantra === m.id ? ' on' : ''}" data-mantra="${m.id}">${esc(m.label)}</button>`).join('');
-  $$('#mantraSeg .chip').forEach(c => c.addEventListener('click', () => {
-    S.simran.mantra = c.dataset.mantra; store.set('simran', S.simran); renderSimran();
-  }));
-  const m = MANTRAS.find(x => x.id === s.mantra) || MANTRAS[0];
-  $('#simranGlyph').textContent = m.glyph;
-  $('#simranCount').textContent = s.count;
-  $('#simranTotal').textContent = s.total;
-  $('#simranMalas').textContent = s.malas;
-  const filled = s.count % 108;
-  $('#malaDots').innerHTML = Array.from({ length: 108 }, (_, i) =>
-    `<i class="${i < filled ? 'on' : ''}"></i>`).join('');
+async function saakhiAll() {
+  const db = await idbOpen();
+  return new Promise((res, rej) => {
+    const tx = db.transaction('sakhis', 'readonly');
+    const req = tx.objectStore('sakhis').getAll();
+    let out = [];
+    req.onsuccess = () => { out = req.result || []; };
+    tx.oncomplete = () => { db.close(); res(out.sort((a, b) => (a.added || 0) - (b.added || 0))); };
+    tx.onerror = () => { db.close(); rej(tx.error); };
+  });
+}
+async function saakhiPut(rec) {
+  const db = await idbOpen();
+  return new Promise((res, rej) => {
+    const tx = db.transaction('sakhis', 'readwrite');
+    tx.objectStore('sakhis').put(rec, rec.id);
+    tx.oncomplete = () => { db.close(); res(rec); };
+    tx.onerror = () => { db.close(); rej(tx.error); };
+  });
+}
+async function saakhiRemove(id) {
+  const db = await idbOpen();
+  return new Promise((res, rej) => {
+    const tx = db.transaction('sakhis', 'readwrite');
+    tx.objectStore('sakhis').delete(id);
+    tx.oncomplete = () => { db.close(); res(); };
+    tx.onerror = () => { db.close(); rej(tx.error); };
+  });
 }
 
-function simranBump(n) {
-  const s = S.simran;
-  s.count = Math.max(0, s.count + n);
-  s.total = Math.max(0, s.total + n);
-  s.malas = Math.floor(s.count / 108);
-  store.set('simran', s);
-  renderSimran();
-  if (navigator.vibrate) navigator.vibrate(8);
+async function renderSaakhi() {
+  try { SAAKHI.list = await saakhiAll(); } catch { SAAKHI.list = []; }
+  if (!SAAKHI.list.length && !store.get('saakhiSeeded', false)) {
+    for (const s of SAAKHI_SEED) await saakhiPut({ ...s, added: Date.now() });
+    store.set('saakhiSeeded', true);
+    try { SAAKHI.list = await saakhiAll(); } catch {}
+  }
+  const el = $('#saakhiList');
+  el.innerHTML = SAAKHI.list.length
+    ? SAAKHI.list.map(s => {
+        const first = (s.body || '').replace(/\s+/g, ' ').slice(0, 88).trim();
+        return '<button class="saakhi-item" data-id="' + esc(s.id) + '">'
+          + '<strong>' + esc(s.title || 'Untitled') + '</strong>'
+          + '<span>' + esc(first) + ((s.body || '').length > 88 ? '…' : '') + '</span>'
+          + (s.source ? '<em>' + esc(s.source) + '</em>' : '')
+          + '</button>';
+      }).join('')
+    : '<p class="saakhi-empty">No sakhis yet. Write one, or import a text file.</p>';
+  $$('#saakhiList .saakhi-item').forEach(b => { b.onclick = () => openSaakhi(b.dataset.id); });
+  // the retired simran counter keeps a visible record
+  const sm = store.get('simran', null);
+  if (sm && (sm.total > 0 || sm.count > 0) && !store.get('simranArchive', null)) {
+    store.set('simranArchive', { total: sm.total || 0, malas: sm.malas || 0, at: Date.now() });
+  }
+  const arc = store.get('simranArchive', null);
+  const line = $('#simranArchiveLine');
+  if (arc) {
+    line.hidden = false;
+    line.textContent = 'Simran counter retired — ' + arc.total + ' lifetime, '
+      + arc.malas + ' malas, archived ' + new Date(arc.at).toLocaleDateString() + '.';
+  }
+}
+
+function openSaakhi(id) {
+  const s = SAAKHI.list.find(x => x.id === id);
+  if (!s) return;
+  SAAKHI.open = s;
+  $('#saakhiTitle').textContent = s.title || 'Untitled';
+  $('#saakhiSub').textContent = s.source || 'kept on this device';
+  $('#saakhiBody').innerHTML = (s.body || '').split(/\n\s*\n/).map(p =>
+    '<p>' + esc(p).replace(/\n/g, '<br>') + '</p>').join('');
+  $('#saakhiBody').scrollTop = 0;
+  $('#saakhiView').hidden = false;
 }
 
 /* ───────────── Reflections + gallery ───────────── */
@@ -745,11 +800,11 @@ function openDates() {
 /* ───────────── navigation ───────────── */
 function show(view) {
   S.view = view;
-  for (const v of ['today', 'hukamnama', 'nitnem', 'simran', 'reflect'])
+  for (const v of ['today', 'hukamnama', 'nitnem', 'saakhi', 'reflect'])
     $('#view-' + v).hidden = v !== view;
   $$('.tab').forEach(t => t.classList.toggle('on', t.dataset.view === view));
   $('#topTitle').textContent = { today: 'Sikhi', hukamnama: 'Hukamnama', nitnem: 'Nitnem',
-                                 simran: 'Simran', reflect: 'Reflections' }[view];
+                                 saakhi: 'Saakhi', reflect: 'Reflections' }[view];
   window.scrollTo({ top: 0 });
   store.set('view', view);
 }
@@ -773,9 +828,67 @@ $('#textSizeBtn').onclick = () => {
 };
 $('#hukamCard').onclick = () => show('hukamnama');
 $('#reflectCard').onclick = () => show('reflect');
-$('#simranTap').onclick = () => simranBump(1);
-$('#simranReset').onclick = () => { S.simran.count = 0; S.simran.malas = 0; store.set('simran', S.simran); renderSimran(); };
-$('#simranUndo').onclick = () => simranBump(-1);
+$('#saakhiAdd').onclick = () => {
+  $('#saakhiTitleIn').value = '';
+  $('#saakhiBodyIn').value = '';
+  $('#saakhiEdit').hidden = false;
+  $('#saakhiTitleIn').focus();
+};
+$('#saakhiEditCancel').onclick = () => { $('#saakhiEdit').hidden = true; };
+$('#saakhiEditSave').onclick = async () => {
+  const title = $('#saakhiTitleIn').value.trim();
+  const body = $('#saakhiBodyIn').value.trim();
+  if (!body) { toast('Nothing to save'); return; }
+  await saakhiPut({ id: 'sk_' + Date.now(), title: title || 'Untitled', body,
+                    source: 'added by you', added: Date.now() });
+  $('#saakhiEdit').hidden = true;
+  await renderSaakhi();
+  toast('Saakhi saved');
+};
+$('#saakhiBack').onclick = () => { $('#saakhiView').hidden = true; };
+$('#saakhiDel').onclick = async () => {
+  const s = SAAKHI.open;
+  if (!s) return;
+  if (!confirm('Delete "' + (s.title || 'Untitled') + '" from this device?')) return;
+  await saakhiRemove(s.id);
+  $('#saakhiView').hidden = true;
+  SAAKHI.open = null;
+  await renderSaakhi();
+  toast('Deleted');
+};
+$('#saakhiImport').onclick = () => $('#saakhiFile').click();
+$('#saakhiFile').onchange = async e => {
+  const f = (e.target.files || [])[0];
+  e.target.value = '';
+  if (!f) return;
+  try {
+    const text = await f.text();
+    const name = f.name.replace(/\.[^.]+$/, '');
+    let made = 0;
+    if (/\.json$/i.test(f.name)) {
+      const d = JSON.parse(text);
+      const arr = Array.isArray(d) ? d : (d.sakhis || (d.title ? [d] : []));
+      for (const s of arr) {
+        const body = s && (s.body || s.text);
+        if (!body) continue;
+        await saakhiPut({ id: 'sk_' + Date.now() + '_' + made, title: s.title || 'Untitled',
+                          body, source: s.source || '', added: Date.now() });
+        made++;
+      }
+    } else {
+      const t = text.trim();
+      if (t) {
+        await saakhiPut({ id: 'sk_' + Date.now(), title: name || 'Imported', body: t,
+                          source: 'imported', added: Date.now() });
+        made = 1;
+      }
+    }
+    await renderSaakhi();
+    toast(made ? 'Imported ' + made + (made === 1 ? ' saakhi' : ' sakhis') : 'No saakhi text found');
+  } catch (err) {
+    toast('Could not read that file');
+  }
+};
 $('#reflectNext').onclick = () => {
   reflectIndex = ((reflectIndex === null ? quoteToday : reflectIndex) + 1) % S.quotes.length;
   renderReflect();

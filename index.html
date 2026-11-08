@@ -85,26 +85,16 @@
     <div id="baniList"></div>
   </section>
 
-  <!-- ───────────── SIMRAN ───────────── -->
-  <section class="view" id="view-simran" hidden>
-    <div class="simran-wrap">
-      <div class="seg" id="mantraSeg"></div>
-      <button class="simran-tap" id="simranTap" aria-label="Count">
-        <span class="simran-glyph" id="simranGlyph">ੴ</span>
-        <span class="simran-count" id="simranCount">0</span>
-        <span class="simran-hint">tap anywhere in the circle</span>
-      </button>
-      <div class="mala" id="malaDots" aria-hidden="true"></div>
-      <div class="simran-stats">
-        <div><span class="stat-num" id="simranTotal">0</span><span class="stat-lab">lifetime</span></div>
-        <div><span class="stat-num" id="simranMalas">0</span><span class="stat-lab">malas (108)</span></div>
-      </div>
-      <div class="simran-actions">
-        <button class="btn-ghost" id="simranReset">Reset count</button>
-        <button class="btn-ghost" id="simranUndo">Undo</button>
-      </div>
-      <p class="fineprint">Counts are kept on this device only.</p>
+  <!-- ───────────── SAAKHI ───────────── -->
+  <section class="view" id="view-saakhi" hidden>
+    <p class="saakhi-intro">Sakhis are kept on this device only — nothing is uploaded.</p>
+    <div id="saakhiList"></div>
+    <div class="saakhi-actions">
+      <button class="btn-ghost" id="saakhiAdd">Write a saakhi</button>
+      <button class="btn-ghost" id="saakhiImport">Import a file</button>
+      <input type="file" id="saakhiFile" accept=".txt,.md,.json,text/plain,application/json" hidden>
     </div>
+    <p class="fineprint" id="simranArchiveLine" hidden></p>
   </section>
 
   <!-- ───────────── REFLECTIONS ───────────── -->
@@ -139,9 +129,9 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6.5 7.5l11 9M17.5 7.5l-11 9"/><circle cx="12" cy="12" r="2.4"/></svg>
     <span>Nitnem</span>
   </button>
-  <button class="tab" data-view="simran" aria-label="Simran">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.6" r="1.7"/><circle cx="18.4" cy="7.4" r="1.7"/><circle cx="20.4" cy="14" r="1.7"/><circle cx="16.4" cy="19.4" r="1.7"/><circle cx="9.4" cy="20.2" r="1.7"/><circle cx="4.4" cy="16.2" r="1.7"/><circle cx="4.2" cy="9.4" r="1.7"/><circle cx="8.6" cy="5.4" r="1.7"/></svg>
-    <span>Simran</span>
+  <button class="tab" data-view="saakhi" aria-label="Saakhi">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.6C10.4 5.1 8.4 4.5 4.5 4.5v12.4c3.9 0 5.9.6 7.5 2.1 1.6-1.5 3.6-2.1 7.5-2.1V4.5c-3.9 0-5.9.6-7.5 2.1z"/><path d="M12 6.6V19"/></svg>
+    <span>Saakhi</span>
   </button>
   <button class="tab" data-view="reflect" aria-label="Reflections">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9L12 17.5l-1.9-5.1L5 10.5l5.1-1.9z"/><path d="M18.6 16.4l.8 2.1 2.1.8-2.1.8-.8 2.1-.8-2.1-2.1-.8 2.1-.8z"/></svg>
@@ -203,6 +193,29 @@
     <span></span>
   </div>
   <div class="reader-body" id="datesBody"></div>
+</div>
+
+<!-- saakhi reader -->
+<div class="reader" id="saakhiView" hidden>
+  <div class="reader-bar">
+    <button class="icon-btn" id="saakhiBack" aria-label="Back">‹</button>
+    <div class="reader-title"><strong id="saakhiTitle"></strong><span id="saakhiSub"></span></div>
+    <button class="icon-btn" id="saakhiDel" aria-label="Delete">✕</button>
+  </div>
+  <div class="reader-body" id="saakhiBody"></div>
+</div>
+
+<!-- write a saakhi -->
+<div class="reader" id="saakhiEdit" hidden>
+  <div class="reader-bar">
+    <button class="icon-btn" id="saakhiEditCancel" aria-label="Cancel">‹</button>
+    <div class="reader-title"><strong>Write a saakhi</strong><span>kept on this device</span></div>
+    <button class="icon-btn" id="saakhiEditSave" aria-label="Save">✓</button>
+  </div>
+  <div class="reader-body saakhi-edit">
+    <input class="saakhi-input" id="saakhiTitleIn" placeholder="Title" aria-label="Title">
+    <textarea class="saakhi-textarea" id="saakhiBodyIn" placeholder="The saakhi…" aria-label="Saakhi text"></textarea>
+  </div>
 </div>
 
 <!-- lightbox -->
