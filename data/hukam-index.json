@@ -1,9 +1,18 @@
 {
- "count": 38,
+ "count": 39,
  "first": "2026-10-01",
- "last": "2026-11-07",
- "updated": "2026-11-07T22:37:57+00:00",
+ "last": "2026-11-08",
+ "updated": "2026-11-08T05:30:05+00:00",
  "days": [
+  {
+   "date": "2026-11-08",
+   "raag": "Raag Dhanaasree",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 678,
+   "shabads": 1,
+   "verses": 10,
+   "first": "ਧਨਾਸਰੀ ਮਹਲਾ ੫ ਘਰੁ ੬"
+  },
   {
    "date": "2026-11-07",
    "raag": "Raag Raamkalee",
