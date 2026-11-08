@@ -778,11 +778,15 @@ function renderDates() {
   }).join('') : '<li class="dn-empty">No dates loaded</li>';
 }
 
-function openDates() {
+/* The full list expands inside the card rather than in a fixed overlay: a
+   fixed scroll container is exactly what froze on iOS, and the page scrolls
+   natively this way. */
+function renderDatesFull() {
   const now = mdOf(new Date());
   const all = (S.dates || []).slice().sort((a, b) => (a.md < b.md ? -1 : 1));
-  $('#datesSub').textContent = S.datesSource || '';
-  $('#datesBody').innerHTML = all.map(x => {
+  const box = $('#datesAll');
+  if (!box) return;
+  box.innerHTML = all.map(x => {
     const [m, d] = x.md.split('-').map(Number);
     return '<div class="date-row' + (x.md < now ? ' past' : '') + '">'
       + '<span class="dr-md">' + d + ' ' + MN[m - 1] + '</span>'
@@ -793,8 +797,17 @@ function openDates() {
   }).join('')
     + '<p class="date-credit">Source: ' + esc(S.datesSource || 'unknown')
     + '. Fixed Nanakshahi dates repeat; lunar dates move each year — check the current panjika.</p>';
-  $('#datesView').hidden = false;
-  $('#datesBody').scrollTop = 0;
+  box.onclick = e => e.stopPropagation();     // a tap inside must not collapse it
+}
+
+function toggleDates() {
+  const box = $('#datesAll');
+  if (!box) return;
+  const open = !box.classList.contains('open');
+  if (open) renderDatesFull();
+  box.classList.toggle('open', open);
+  $('#datesMore').textContent = open ? 'Tap to close' : "Tap for the year's dates →";
+  if (open) box.scrollIntoView({ block: 'start' });
 }
 
 /* ───────────── navigation ───────────── */
@@ -894,8 +907,7 @@ $('#reflectNext').onclick = () => {
   renderReflect();
 };
 $('#reflectToday').onclick = () => { reflectIndex = null; renderReflect(); };
-$('#datesCard').onclick = openDates;
-$('#datesBack').onclick = () => { $('#datesView').hidden = true; };
+$('#datesCard').onclick = toggleDates;
 $('#lightbox').onclick = () => { $('#lightbox').hidden = true; };
 
 /* listen-along player */
