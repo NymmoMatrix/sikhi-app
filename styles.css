@@ -45,12 +45,20 @@
 }
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0}
+html,body{margin:0;padding:0;height:100%}
 body{
   background:var(--bg);color:var(--ink);
   font-family:var(--sans);font-size:16px;line-height:1.55;
-  padding-bottom:calc(var(--tabbar-h) + env(safe-area-inset-bottom));
   -webkit-font-smoothing:antialiased;
+  /* The app is a fixed-height shell: the page itself never scrolls, so the top
+     bar and tab bar cannot drift. Only <main> scrolls — the same structure the
+     bani reader already uses, which is why that one never misbehaved on iOS. */
+  display:flex;flex-direction:column;
+  height:100dvh;overflow:hidden;
+}
+main#main{
+  flex:1 1 auto;min-height:0;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
 }
 button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
 ::selection{background:var(--accent-soft);color:#241f1a}
@@ -415,7 +423,7 @@ main{max-width:720px;margin:0 auto;padding:1rem 1.1rem 2.5rem}
 
 /* ───────────── tab bar ───────────── */
 .tabbar{
-  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  position:relative;z-index:40;flex:none;
   display:flex;justify-content:space-around;align-items:stretch;
   /* Opaque, and deliberately NO backdrop-filter: a backdrop-filter on a
      position:fixed element makes iOS scroll it with the page instead of

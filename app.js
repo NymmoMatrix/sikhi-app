@@ -292,7 +292,7 @@ async function openHukamDate(iso) {
   if (iso === dateKey()) {                  // that date is today: use the live copy
     await loadHukamnama();
     renderHukamArchive();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollMain({ top: 0, behavior: 'smooth' });
     return;
   }
   S.hukamDate = iso;
@@ -306,7 +306,7 @@ async function openHukamDate(iso) {
   }
   renderHukam();
   renderHukamArchive();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  scrollMain({ top: 0, behavior: 'smooth' });
 }
 
 /* ───────────── Nitnem list ───────────── */
@@ -831,6 +831,12 @@ function toggleDates() {
 }
 
 /* ───────────── navigation ───────────── */
+/* <main> is the scroll container now, not the document. */
+function scrollMain(opts) {
+  const m = $('#main');
+  if (m) m.scrollTo(opts || { top: 0 });
+}
+
 function show(view) {
   S.view = view;
   for (const v of ['today', 'hukamnama', 'nitnem', 'saakhi', 'reflect'])
@@ -838,7 +844,7 @@ function show(view) {
   $$('.tab').forEach(t => t.classList.toggle('on', t.dataset.view === view));
   $('#topTitle').textContent = { today: 'Sikhi', hukamnama: 'Hukamnama', nitnem: 'Nitnem',
                                  saakhi: 'Saakhi', reflect: 'Reflections' }[view];
-  window.scrollTo({ top: 0 });
+  scrollMain();
   store.set('view', view);
 }
 
