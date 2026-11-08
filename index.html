@@ -166,12 +166,20 @@
 
   <!-- listen-along player: shown only for banis that have a recitation -->
   <div class="audio-bar" id="audioBar" hidden>
-    <button class="ab-play" id="audioPlay" aria-label="Play">▶</button>
-    <div class="ab-mid">
-      <input type="range" id="audioSeek" min="0" max="1000" value="0" step="1" aria-label="Seek">
-      <div class="ab-times"><span id="audioNow">0:00</span><span id="audioDur">0:00</span></div>
+    <div class="ab-row">
+      <button class="ab-play" id="audioPlay" aria-label="Play">▶</button>
+      <div class="ab-mid">
+        <input type="range" id="audioSeek" min="0" max="1000" value="0" step="1" aria-label="Seek">
+        <div class="ab-times"><span id="audioNow">0:00</span><span id="audioDur">0:00</span></div>
+      </div>
     </div>
-    <button class="ab-rate" id="audioRate" aria-label="Playback speed">1×</button>
+    <div class="ab-rates" id="audioRates">
+      <span class="ab-rate-label">Speed</span>
+      <button class="ab-rate" data-rate="1" aria-label="Normal speed">1×</button>
+      <button class="ab-rate" data-rate="1.25" aria-label="1.25 times speed">1.25×</button>
+      <button class="ab-rate" data-rate="1.5" aria-label="1.5 times speed">1.5×</button>
+      <button class="ab-rate" data-rate="2" aria-label="Double speed">2×</button>
+    </div>
   </div>
 
   <!-- a bani with no audio yet: import your own copy, kept on this device only -->

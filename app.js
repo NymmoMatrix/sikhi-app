@@ -405,7 +405,7 @@ const AU = {
   rate: store.get('audioRate', 1),
   follow: store.get('audioFollow', true),
 };
-const RATES = [0.75, 1, 1.25, 1.5];
+const RATES = [1, 1.25, 1.5, 2];   // 0.75 dropped: nothing below normal speed was wanted
 
 /* ───────────── audio you supply yourself (kept on this device) ─────────────
    A bani may ship with a bundled recitation, but you can also load your own
@@ -503,6 +503,18 @@ function audioEl() {
   el.addEventListener('error', () => setPlayIcon(false));
   AU.el = el;
   return el;
+}
+
+/* One place that applies a rate: the element, the stored choice and the
+   highlighted button must never disagree. */
+function setRate(r) {
+  if (!RATES.includes(r)) r = 1;
+  AU.rate = r;
+  store.set('audioRate', r);
+  if (AU.el) AU.el.playbackRate = r;
+  $$('#audioRates .ab-rate').forEach(b => {
+    b.classList.toggle('on', parseFloat(b.dataset.rate) === r);
+  });
 }
 
 function setPlayIcon(playing) {
@@ -605,8 +617,7 @@ async function setupAudio(b) {
 
   const el = audioEl();
   setSource(src, b.id);
-  el.playbackRate = AU.rate;
-  $('#audioRate').textContent = AU.rate + '×';
+  setRate(AU.rate);
   const useMarks = !!(b.audio && b.audio.marks && !rec);  // timings only match the bundled file
   $('#audioFollow').hidden = !useMarks;
   $('#audioFollow').classList.toggle('on', !!AU.follow);
@@ -924,12 +935,9 @@ $('#audioPlay').onclick = () => {
   const el = audioEl();
   if (el.paused) el.play().catch(() => {}); else el.pause();
 };
-$('#audioRate').onclick = () => {
-  AU.rate = RATES[(RATES.indexOf(AU.rate) + 1) % RATES.length];
-  store.set('audioRate', AU.rate);
-  if (AU.el) AU.el.playbackRate = AU.rate;
-  $('#audioRate').textContent = AU.rate + '×';
-};
+$$('#audioRates .ab-rate').forEach(b => {
+  b.onclick = () => setRate(parseFloat(b.dataset.rate));
+});
 const seekEl = $('#audioSeek');
 seekEl.addEventListener('input', () => {
   seekEl.dataset.dragging = '1';                 // don't fight the drag

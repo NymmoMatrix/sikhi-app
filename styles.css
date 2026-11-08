@@ -205,12 +205,19 @@ main{max-width:720px;margin:0 auto;padding:1rem 1.1rem 2.5rem}
 /* ───────────── listen-along player ───────────── */
 .bani-audio{color:var(--accent);font-size:.9rem}
 .audio-bar{
-  display:flex;align-items:center;gap:.7rem;
+  display:flex;flex-direction:column;gap:.45rem;
   padding:.5rem .9rem calc(.5rem + env(safe-area-inset-bottom));
   border-top:1px solid var(--line);
   background:color-mix(in srgb,var(--bg-soft) 92%,transparent);
   backdrop-filter:saturate(160%) blur(12px);
 }
+.ab-row{display:flex;align-items:center;gap:.7rem}
+.ab-rates{display:flex;align-items:center;gap:.32rem;flex-wrap:wrap}
+.ab-rate-label{
+  font-size:.6rem;color:var(--muted);letter-spacing:.06em;
+  text-transform:uppercase;margin-right:.1rem;
+}
+.ab-rate.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 .audio-bar[hidden]{display:none}
 .ab-play{
   flex:none;width:44px;height:44px;border-radius:50%;
