@@ -478,6 +478,7 @@ async function refreshPhotos() {
   S.images = PHOTO.recs.map(r => r.name);
 }
 
+
 function mmss(s) {
   if (!isFinite(s) || s < 0) s = 0;
   return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
@@ -669,9 +670,9 @@ function renderGallery() {
   $('#galCount').textContent = S.images.length;
   if (!S.images.length) {
     gal.innerHTML = '<div class="gal-empty"><p>Your photos stay on this device.</p>'
-      + '<button class="aa-btn" id="galImport">Import the zip</button>'
-      + '<span class="aa-note">Sikhi-App-Photos.zip · never uploaded</span>'
-      + '<button class="link-btn" id="galImportMany">or choose the photos instead</button></div>';
+      + '<button class="aa-btn" id="galImportMany">Import photos</button>'
+      + '<span class="aa-note">choose the whole folder · never uploaded</span>'
+      + '<button class="link-btn" id="galImport">or import a .zip</button></div>';
   } else {
     gal.innerHTML = S.images.map(f =>
       `<button data-img="${esc(f)}"><img loading="lazy" src="${PHOTO.urls[f] || ''}" alt=""></button>`).join('')
