@@ -52,6 +52,12 @@
       <p class="card-more">Tap for more →</p>
     </div>
 
+    <div class="card tap" id="datesCard">
+      <p class="card-kicker">Dates ahead</p>
+      <ul class="dates-next" id="datesNext"></ul>
+      <p class="card-more">Tap for the year's dates →</p>
+    </div>
+
     <div class="streak-card">
       <div><span class="streak-num" id="streakNum">0</span><span class="streak-lab">day streak</span></div>
       <div><span class="streak-num" id="readTodayNum">0</span><span class="streak-lab">read today</span></div>
@@ -187,6 +193,16 @@
        file immediately, instead of checking it and hunting for an "Open" button -->
   <input type="file" id="photoFile" hidden>
   <input type="file" id="photoFileMany" accept="image/*" multiple hidden>
+</div>
+
+<!-- the year's Sikh dates -->
+<div class="reader" id="datesView" hidden>
+  <div class="reader-bar">
+    <button class="icon-btn" id="datesBack" aria-label="Back">‹</button>
+    <div class="reader-title"><strong>Sikh dates</strong><span id="datesSub"></span></div>
+    <span></span>
+  </div>
+  <div class="reader-body" id="datesBody"></div>
 </div>
 
 <!-- lightbox -->

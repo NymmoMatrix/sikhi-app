@@ -280,6 +280,22 @@ main{max-width:720px;margin:0 auto;padding:1rem 1.1rem 2.5rem}
   border-radius:inherit;font-size:1.3rem;min-height:100%;
 }
 
+/* ───────────── Sikh dates ───────────── */
+.dates-next{list-style:none;margin:.35rem 0 0;padding:0;display:flex;flex-direction:column;gap:.6rem}
+.dates-next li{display:grid;grid-template-columns:3.2rem 1fr;gap:0 .7rem}
+.dn-date{grid-row:span 2;font-size:.7rem;font-weight:700;color:var(--accent-deep);
+  letter-spacing:.02em;padding-top:.1rem}
+.dn-name{font-size:.9rem;line-height:1.25}
+.dn-when{font-size:.68rem;color:var(--muted)}
+.dn-empty{display:block;font-size:.8rem;color:var(--muted)}
+.date-row{display:flex;gap:.85rem;padding:.9rem 0;border-bottom:1px solid var(--line)}
+.date-row.past{opacity:.5}
+.dr-md{flex:none;width:3.2rem;font-size:.72rem;font-weight:700;color:var(--accent-deep);padding-top:.15rem}
+.dr-main{display:flex;flex-direction:column;gap:.25rem;font-size:.9rem;line-height:1.4}
+.dr-main span{color:var(--muted)}
+.dr-main em{font-size:.68rem;color:var(--accent-deep);font-style:normal}
+.date-credit{margin:1.2rem 0 0;font-size:.66rem;color:var(--muted);line-height:1.45}
+
 /* ───────────── simran ───────────── */
 .simran-wrap{display:flex;flex-direction:column;align-items:center;gap:1rem;padding-top:.4rem}
 .seg{display:flex;gap:.35rem;flex-wrap:wrap;justify-content:center}

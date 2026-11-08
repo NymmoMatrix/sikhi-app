@@ -50,6 +50,11 @@ async function boot() {
   S.banis = index.banis;
   S.quotes = quotes.quotes;
   S.images = [];                  // photos are yours alone: they live in device storage
+  loadJSON('data/calendar.json').then(d => {      // Sikh dates (optional, never fatal)
+    S.dates = d.days || [];
+    S.datesSource = d.source || '';
+    renderDates();
+  }).catch(() => {});
   await refreshLocalKeys();       // which banis already have your own audio on this device
   await refreshPhotos();          // and which photos you have imported here
   // iOS can unload an installed PWA while the file picker is open. If we are
@@ -691,6 +696,52 @@ function renderGallery() {
   }));
 }
 
+/* ───────────── Sikh dates ─────────────
+   Store-and-show only: the dates come from data/calendar.json, which cites its
+   source. Entries flagged "varies" follow the lunar calendar and are NOT
+   computed here — showing a guessed gurpurab date would be worse than none. */
+const MN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const mdOf = d => String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+
+function daysUntil(md) {
+  const now = new Date(); now.setHours(0, 0, 0, 0);
+  const [m, d] = md.split('-').map(Number);
+  let t = new Date(now.getFullYear(), m - 1, d);
+  if (t < now) t = new Date(now.getFullYear() + 1, m - 1, d);
+  return Math.round((t - now) / 86400000);
+}
+
+function renderDates() {
+  const list = (S.dates || []).map(x => ({ ...x, in: daysUntil(x.md) }));
+  const next = list.slice().sort((a, b) => a.in - b.in).slice(0, 3);
+  $('#datesNext').innerHTML = next.length ? next.map(x => {
+    const [m, d] = x.md.split('-').map(Number);
+    const when = x.in === 0 ? 'today' : x.in === 1 ? 'tomorrow' : 'in ' + x.in + ' days';
+    return '<li><span class="dn-date">' + d + ' ' + MN[m - 1] + '</span>'
+      + '<span class="dn-name">' + esc(x.name) + '</span>'
+      + '<span class="dn-when">' + when + (x.varies ? ' · date varies' : '') + '</span></li>';
+  }).join('') : '<li class="dn-empty">No dates loaded</li>';
+}
+
+function openDates() {
+  const now = mdOf(new Date());
+  const all = (S.dates || []).slice().sort((a, b) => (a.md < b.md ? -1 : 1));
+  $('#datesSub').textContent = S.datesSource || '';
+  $('#datesBody').innerHTML = all.map(x => {
+    const [m, d] = x.md.split('-').map(Number);
+    return '<div class="date-row' + (x.md < now ? ' past' : '') + '">'
+      + '<span class="dr-md">' + d + ' ' + MN[m - 1] + '</span>'
+      + '<div class="dr-main"><strong>' + esc(x.name) + '</strong>'
+      + '<span>' + esc(x.note || '') + '</span>'
+      + (x.varies ? '<em>follows the lunar calendar — this date shifts yearly</em>' : '')
+      + '</div></div>';
+  }).join('')
+    + '<p class="date-credit">Source: ' + esc(S.datesSource || 'unknown')
+    + '. Fixed Nanakshahi dates repeat; lunar dates move each year — check the current panjika.</p>';
+  $('#datesView').hidden = false;
+  $('#datesBody').scrollTop = 0;
+}
+
 /* ───────────── navigation ───────────── */
 function show(view) {
   S.view = view;
@@ -730,6 +781,8 @@ $('#reflectNext').onclick = () => {
   renderReflect();
 };
 $('#reflectToday').onclick = () => { reflectIndex = null; renderReflect(); };
+$('#datesCard').onclick = openDates;
+$('#datesBack').onclick = () => { $('#datesView').hidden = true; };
 $('#lightbox').onclick = () => { $('#lightbox').hidden = true; };
 
 /* listen-along player */

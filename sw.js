@@ -3,13 +3,13 @@
    Images are cached on demand (274 of them would be wasteful to precache).
    The Hukamnama is network-first with a cached fallback. */
 
-const VERSION = 'sikhi-v16';
+const VERSION = 'sikhi-v17';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png',
   './fonts/gurmukhi-serif.ttf', './fonts/gurmukhi-serif-regular.ttf',
   './data/bani-index.json', './data/quotes.json',
-  './data/hukamnama.json',
+  './data/hukamnama.json', './data/calendar.json',
 ];
 /* Per-bani verse files (data/bani-*.json) are NOT precached — they are pulled
    on demand and then cached by the same-origin cache-first branch below, so a
