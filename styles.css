@@ -290,6 +290,11 @@ main{max-width:720px;margin:0 auto;padding:1rem 1.1rem 2.5rem}
 .dn-empty{display:block;font-size:.8rem;color:var(--muted)}
 .dates-all{display:none;margin-top:.9rem;border-top:1px solid var(--line);padding-top:.4rem}
 .dates-all.open{display:block}
+.date-month{
+  margin:1.1rem 0 .1rem;font-size:.68rem;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--accent-deep);
+}
+.date-month:first-child{margin-top:.2rem}
 .date-row{display:flex;gap:.85rem;padding:.9rem 0;border-bottom:1px solid var(--line)}
 .date-row.past{opacity:.5}
 .dr-md{flex:none;width:3.2rem;font-size:.72rem;font-weight:700;color:var(--accent-deep);padding-top:.15rem}

@@ -782,13 +782,22 @@ function renderDates() {
    fixed scroll container is exactly what froze on iOS, and the page scrolls
    natively this way. */
 function renderDatesFull() {
-  const now = mdOf(new Date());
-  const all = (S.dates || []).slice().sort((a, b) => (a.md < b.md ? -1 : 1));
+  // ordered from TODAY forward, wrapping into next year: reading down the list
+  // follows the year ahead, so November is followed by December, then January.
+  const all = (S.dates || []).map(x => ({ ...x, in: daysUntil(x.md) }))
+    .sort((a, b) => a.in - b.in);
   const box = $('#datesAll');
   if (!box) return;
+  let lastMonth = '';
   box.innerHTML = all.map(x => {
     const [m, d] = x.md.split('-').map(Number);
-    return '<div class="date-row' + (x.md < now ? ' past' : '') + '">'
+    let head = '';
+    if (MN[m - 1] !== lastMonth) {
+      lastMonth = MN[m - 1];
+      const yearNote = x.md < mdOf(new Date()) ? ' · next year' : '';
+      head = '<p class="date-month">' + MN[m - 1] + yearNote + '</p>';
+    }
+    return head + '<div class="date-row">'
       + '<span class="dr-md">' + d + ' ' + MN[m - 1] + '</span>'
       + '<div class="dr-main"><strong>' + esc(x.name) + '</strong>'
       + '<span>' + esc(x.note || '') + '</span>'
