@@ -64,7 +64,10 @@ async function boot() {
     setTimeout(() => toast('The picker closed the app — tap "Import the zip" again', 8000), 1500);
   }
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') sessionStorage.removeItem('pickerPending');
+    if (document.visibilityState === 'visible') {
+      sessionStorage.removeItem('pickerPending');
+      loadHukamnama();          // coming back to the app is a chance for a newer mukhwak
+    }
   });
 
   applyDisplay(); applyScale();
@@ -72,6 +75,12 @@ async function boot() {
   loadHukamnama();
   loadHukamIndex();
   $('#hukamDateJump').onchange = e => { if (e.target.value) openHukamDate(e.target.value); };
+$('#hukamRefresh').onclick = async () => {
+  toast('Checking for a newer Hukamnama…');
+  await loadHukamnama();
+  const d = hukamDay(S.hukamToday);
+  toast(S.hukamError ? 'Could not reach the Hukamnama service' : 'Showing the Hukamnama of ' + (d || 'today'));
+};
   registerSW();
   prefetchDaily();          // pull today's banis in the background for offline
 }
@@ -164,21 +173,37 @@ function streak() {
 }
 
 /* ───────────── Hukamnama ───────────── */
+/* The mukhwak's own Gregorian date — that is what identifies it, not the day
+   the request happened to be made. */
+function hukamDay(h) {
+  const g = h && h.date && h.date.gregorian;
+  if (!g || !g.year) return null;
+  return g.year + '-' + String(g.month).padStart(2, '0') + '-' + String(g.date).padStart(2, '0');
+}
+
 async function loadHukamnama() {
   S.hukamDate = null;                       // the live view is always today
   const key = dateKey();
   const cached = store.get('hukam:' + key, null);
-  if (cached) { S.hukam = cached; S.hukamToday = cached; renderHukam(); renderHukamCard(); return; }
+  // Paint the cached copy immediately, but never treat it as final: iOS keeps an
+  // installed PWA resident for days, so a cache hit says nothing about freshness.
+  if (cached) { S.hukam = cached; S.hukamToday = cached; renderHukam(); renderHukamCard(); }
   try {
     const r = await fetch('https://api.banidb.com/v2/hukamnamas/today', { cache: 'no-store' });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const data = await r.json();
-    S.hukam = data; S.hukamToday = data; store.set('hukam:' + key, data);
+    const fresh = hukamDay(data);
+    const shown = hukamDay(cached);
+    S.hukam = data; S.hukamToday = data; S.hukamError = null;
+    store.set('hukam:' + key, data);
+    if (fresh !== shown) { renderHukam(); renderHukamCard(); }   // repaint only when it really changed
   } catch (e) {
     S.hukamError = String(e.message || e);
-    try { S.hukam = await loadJSON('data/hukamnama.json'); S.hukam._stale = true; S.hukamToday = S.hukam; } catch {}
+    if (!S.hukam) {                        // only fall back if we have nothing at all
+      try { S.hukam = await loadJSON('data/hukamnama.json'); S.hukam._stale = true; S.hukamToday = S.hukam; } catch {}
+    }
+    renderHukam(); renderHukamCard();
   }
-  renderHukam(); renderHukamCard();
 }
 
 function firstLine(h) {
