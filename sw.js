@@ -3,7 +3,7 @@
    Images are cached on demand (274 of them would be wasteful to precache).
    The Hukamnama is network-first with a cached fallback. */
 
-const VERSION = 'sikhi-v21';
+const VERSION = 'sikhi-v22';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png',

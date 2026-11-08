@@ -972,13 +972,17 @@ $('#audioFile').onchange = async e => {
     return;
   }
   try {
+    toast('Saving ' + f.name + ' (' + (f.size / 1e6).toFixed(1) + ' MB)…', 12000);
     await localAudio.put(bani.id, { blob: f, name: f.name, type: f.type, size: f.size, added: Date.now() });
     if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
     await refreshLocalKeys();
-    renderNitnem();                          // picks up the \u266a badge
+    renderNitnem();                          // picks up the ♪ badge
     setupAudio(bani);
+    toast('Added ' + f.name + ' to ' + bani.name);
   } catch (err) {
-    $('#addAudioNote').textContent = 'could not save that file here';
+    const why = err && err.name === 'QuotaExceededError' ? 'not enough space on this device' : 'could not save that file';
+    $('#addAudioNote').textContent = why;
+    toast('Audio not added — ' + why, 9000);
   }
 };
 $('#audioClear').onclick = async () => {

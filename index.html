@@ -93,7 +93,7 @@
     <div class="saakhi-actions">
       <button class="btn-ghost" id="saakhiAdd">Write a saakhi</button>
       <button class="btn-ghost" id="saakhiImport">Import a file</button>
-      <input type="file" id="saakhiFile" accept=".txt,.md,.json,text/plain,application/json" hidden>
+      <input type="file" id="saakhiFile" hidden>
     </div>
     <p class="fineprint" id="simranArchiveLine" hidden></p>
   </section>
@@ -187,7 +187,9 @@
     <button class="aa-btn" id="addAudioBtn">♪ Add audio for this bani</button>
     <span class="aa-note" id="addAudioNote">stays on this device</span>
   </div>
-  <input type="file" id="audioFile" accept="audio/*" hidden>
+  <!-- no accept attribute on purpose: iOS greys out files whose type it cannot
+       match, and a downloaded MP3 often reports a generic type. Validated in JS. -->
+  <input type="file" id="audioFile" hidden>
   <!-- no accept / no multiple on the zip input: on iOS that means one tap selects the
        file immediately, instead of checking it and hunting for an "Open" button -->
   <input type="file" id="photoFile" hidden>
