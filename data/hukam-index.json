@@ -1,9 +1,18 @@
 {
- "count": 44,
+ "count": 45,
  "first": "2026-10-01",
- "last": "2026-11-13",
- "updated": "2026-11-13T05:30:28+00:00",
+ "last": "2026-11-14",
+ "updated": "2026-11-14T05:30:31+00:00",
  "days": [
+  {
+   "date": "2026-11-14",
+   "raag": "Raag Dhanaasree",
+   "writer": "Bhagat Kabeer Ji",
+   "ang": 692,
+   "shabads": 1,
+   "verses": 6,
+   "first": "ਜੋ ਜਨੁ ਭਾਉ ਭਗਤਿ ਕਛੁ ਜਾਨੈ ਤਾ ਕਉ ਅਚਰਜੁ ਕਾਹੋ ॥"
+  },
   {
    "date": "2026-11-13",
    "raag": "Raag Dhanaasree",
