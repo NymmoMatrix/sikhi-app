@@ -1,9 +1,27 @@
 {
- "count": 45,
+ "count": 47,
  "first": "2026-10-01",
- "last": "2026-11-14",
- "updated": "2026-11-14T05:30:31+00:00",
+ "last": "2026-11-16",
+ "updated": "2026-11-16T05:30:21+00:00",
  "days": [
+  {
+   "date": "2026-11-16",
+   "raag": "Raag Dhanaasree",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 680,
+   "shabads": 1,
+   "verses": 7,
+   "first": "ਧਨਾਸਰੀ ਮਹਲਾ ੫ ॥"
+  },
+  {
+   "date": "2026-11-15",
+   "raag": "Raag Sorath",
+   "writer": "Guru Nanak Dev Ji",
+   "ang": 636,
+   "shabads": 1,
+   "verses": 27,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੧ ॥"
+  },
   {
    "date": "2026-11-14",
    "raag": "Raag Dhanaasree",
