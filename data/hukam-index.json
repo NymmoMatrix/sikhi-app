@@ -1,9 +1,18 @@
 {
- "count": 47,
+ "count": 48,
  "first": "2026-10-01",
- "last": "2026-11-16",
- "updated": "2026-11-16T05:30:21+00:00",
+ "last": "2026-11-17",
+ "updated": "2026-11-17T05:30:20+00:00",
  "days": [
+  {
+   "date": "2026-11-17",
+   "raag": "Raag Sorath",
+   "writer": "Guru Raam Daas Ji",
+   "ang": 604,
+   "shabads": 1,
+   "verses": 16,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੪ ਘਰੁ ੧"
+  },
   {
    "date": "2026-11-16",
    "raag": "Raag Dhanaasree",
