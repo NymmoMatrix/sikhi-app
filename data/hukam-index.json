@@ -1,9 +1,18 @@
 {
- "count": 48,
+ "count": 49,
  "first": "2026-10-01",
- "last": "2026-11-17",
- "updated": "2026-11-17T05:30:20+00:00",
+ "last": "2026-11-18",
+ "updated": "2026-11-18T05:30:20+00:00",
  "days": [
+  {
+   "date": "2026-11-18",
+   "raag": "Raag Sorath",
+   "writer": "Guru Arjan Dev Ji",
+   "ang": 609,
+   "shabads": 1,
+   "verses": 11,
+   "first": "ਸੋਰਠਿ ਮਹਲਾ ੫ ॥"
+  },
   {
    "date": "2026-11-17",
    "raag": "Raag Sorath",
