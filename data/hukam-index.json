@@ -1,9 +1,18 @@
 {
- "count": 49,
+ "count": 50,
  "first": "2026-10-01",
- "last": "2026-11-18",
- "updated": "2026-11-18T05:30:20+00:00",
+ "last": "2026-11-19",
+ "updated": "2026-11-19T05:30:21+00:00",
  "days": [
+  {
+   "date": "2026-11-19",
+   "raag": "Raag Bilaaval",
+   "writer": "Guru Raam Daas Ji",
+   "ang": 849,
+   "shabads": 3,
+   "verses": 20,
+   "first": "ਬਿਲਾਵਲੁ ਕੀ ਵਾਰ ਮਹਲਾ ੪"
+  },
   {
    "date": "2026-11-18",
    "raag": "Raag Sorath",
