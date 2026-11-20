@@ -1,9 +1,18 @@
 {
- "count": 50,
+ "count": 51,
  "first": "2026-10-01",
- "last": "2026-11-19",
- "updated": "2026-11-19T05:30:21+00:00",
+ "last": "2026-11-20",
+ "updated": "2026-11-20T05:30:20+00:00",
  "days": [
+  {
+   "date": "2026-11-20",
+   "raag": "Raag Jaithsree",
+   "writer": "Guru Raam Daas Ji",
+   "ang": 696,
+   "shabads": 1,
+   "verses": 12,
+   "first": "ਜੈਤਸਰੀ ਮਹਲਾ ੪ ਘਰੁ ੧ ਚਉਪਦੇ"
+  },
   {
    "date": "2026-11-19",
    "raag": "Raag Bilaaval",
